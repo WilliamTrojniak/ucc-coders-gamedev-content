@@ -8,6 +8,7 @@ class Paddle {
         this.y = y;
         this.width = w;
         this.height = h;
+        this.update();
     }
 
     setSpeed(val){
@@ -16,7 +17,7 @@ class Paddle {
     }
 
     move(val){
-        this.x = val;
+        this.x = val - this.width/2;
         if(this.x < 0){
             this.x = 0;
         }
