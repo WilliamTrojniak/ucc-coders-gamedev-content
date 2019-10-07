@@ -1,20 +1,8 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+class Paddle extends Rectangle{
 
-class Paddle {
-
-    constructor(x, y, w, h) {
-        this.x = x;
-        this.y = y;
-        this.width = w;
-        this.height = h;
-        this.update();
-    }
-
-    setSpeed(val){
-        this.speed = val;
-        this.move();
-    }
+    // constructor(x, y, w, h) {
+    //     super(x, y, w, h);
+    // }
 
     move(val){
         this.x = val - this.width/2;
@@ -24,14 +12,6 @@ class Paddle {
         else if(this.x + this.width > canvas.width){
             this.x = canvas.width - this.width;
         }
-        this.update();
     }
 
-    draw(){
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-
-    update(){
-        this.draw();
-    }
 }
