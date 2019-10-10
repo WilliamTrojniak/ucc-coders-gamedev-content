@@ -1,7 +1,7 @@
 
 const paddle = new Paddle(canvas.width/2 - 42, 550, 85, 13);
-const ball = new Ball(50, 50, 10, 7, 7, paddle);
-const brick = new Brick(100, 100, 300, 10, ball, 1);
+const ball = new Ball(50, 60, 8, 7, 7, paddle);
+const brick = new Brick(100, 100, 300, 100, ball, 1);
 
 canvas.addEventListener("mousemove", TakeInput);
 function TakeInput(event){

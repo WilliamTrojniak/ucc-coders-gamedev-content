@@ -14,6 +14,36 @@ class Ball extends Circle {
     collisionDetection(){
         this.paddleCollisionDetection();
         this.wallCollisionDetection();
+        this.brickCollisionDetection();
+    }
+
+    rectangleCollisionDetection(rectangle){
+        let closest_x = this.x;
+        let closest_y = this.y;
+
+        if(this.x < rectangle.x) closest_x = rectangle.x;
+        else if(this.x > rectangle.x + rectangle.width) closest_x = rectangle.x + rectangle.width;
+
+        if(this.y < rectangle.y) closest_y = rectangle.y;
+        else if(this.y > rectangle.y + rectangle.height) closest_y = rectangle.y + rectangle.height;
+
+        let difference_x = this.x - closest_x;
+        let difference_y = this.y - closest_y;
+        let distance = Math.sqrt(Math.pow(difference_x, 2)+Math.pow(difference_y, 2));
+        
+        return distance < this.radius;
+    }
+
+    brickCollisionDetection(){
+        if(this.rectangleCollisionDetection(brick)){
+            if(this.y <= brick.y || this.y >= brick.y + brick.height){
+                this.setSpeed(1, -1);
+            }
+            if(this.x <= brick.x || this.x >= brick.x + brick.width){
+                this.setSpeed(-1, 1);
+            }
+        }
+        
     }
 
     wallCollisionDetection(){
@@ -28,13 +58,18 @@ class Ball extends Circle {
     }
 
     paddleCollisionDetection(){
-        if(this.x + this.radius >= this.paddle.x && this.x - this.radius <= this.paddle.x + this.paddle.width && this.y + this.radius <= this.paddle.y && this.y + this.radius + this.speed.y > this.paddle.y){
-            //TODO Improve X Collision
-            //TODO Change X speed based on where the ball hits the paddle
-            this.setSpeed(1, -1);
-        }
-        else if((this.x - this.radius < this.paddle.x + this.paddle.width && this.x + this.radius > this.paddle.x) && (this.y > this.paddle.y && this.y < this.paddle.y + this.paddle.height)){
-            this.setSpeed(-1, 1);
+
+        if(this.rectangleCollisionDetection(this.paddle)){
+            if(this.y < this.paddle.y){
+                // TODO Change ball direction based on where it hits the paddle
+                this.setSpeed(1, -1);
+            }
+            else if(this.y > this.paddle.y + this.paddle.height){
+                this.setSpeed(1, -1);
+            }
+            if(this.x < this.paddle.x || this.x > this.paddle.x + this.paddle.width){
+                this.setSpeed(-1, 1);
+            }
         }
     }
 
